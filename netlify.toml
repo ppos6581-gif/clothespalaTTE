@@ -1,42 +1,11 @@
-import json
+[build]
+  publish = "public"
+  functions = "netlify/functions"
 
-def handler(event, context):
-    """
-    Serverless routing endpoint managing clothes catalog queries 
-    with updated model details and Pochi payment routing.
-    """
-    if event.get("httpMethod") != "POST":
-        return {
-            "statusCode": 405,
-            "body": json.dumps({"error": "Method Not Allowed"})
-        }
+[functions]
+  node_bundler = "esbuild"
 
-    try:
-        body = json.loads(event.get("body", "{}"))
-        user_message = body.get("message", "").lower()
-
-        # Dynamic query string matching checks
-        if "green" in user_message or "blouse" in user_message:
-            reply = "Our Mint Green Pleated Blouse features rich bronze tones and costs KSh 3,000. Tap 'Order via Pochi' to generate your WhatsApp invoice receipt!"
-        elif "red" in user_message or "dress" in user_message:
-            reply = "The Crimson Scarlet Shift Dress is priced at KSh 3,000. It matches beautifully with minimal silver accessories."
-        elif "pinstripe" in user_message or "stripe" in user_message:
-            reply = "The Mauve Vertical Pinstripe Dress Shirt is available for KSh 3,000, tailored with pure premium-grade cotton fibers."
-        elif "price" in user_message or "how much" in user_message:
-            reply = "Our standard catalog pricing options include Designer Jeans for KSh 1,500, while our premium Tops, Blouses, Dresses, and Silhouette Shirts are flat-priced at KSh 3,000 each."
-        else:
-            reply = "I can verify sizes and stock for Vincent's new blouse variations, crimson cocktail wear, or official shirts. We process payments securely via Pochi La Biashara (0777777777)!"
-
-        return {
-            "statusCode": 200,
-            "headers": {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*"
-            },
-            "body": json.dumps({"reply": reply})
-        }
-    except Exception as e:
-        return {
-            "statusCode": 500,
-            "body": json.dumps({"error": str(e)})
-        }
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
