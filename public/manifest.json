@@ -1,0 +1,21 @@
+{
+  "short_name": "PaletteApp",
+  "name": "Clothes Palette by Vincent",
+  "icons": [
+    {
+      "src": "https://icons8.com",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://icons8.com",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#FFF0F5",
+  "theme_color": "#002060",
+  "display": "standalone",
+  "orientation": "portrait"
+}
